@@ -3,7 +3,7 @@ Name:		ypbind-mt
 Version:	1.6
 Release:	2
 Copyright:	GPL
-Group:		System Environment/Daemons
+Group:		Networking/Daemons
 Source0:	ftp://ftp.us.kernel.org/pub/linux/NIS/%{name}-%{version}.tar.gz
 Source1:	ypbind.init
 Source2:	yp.conf

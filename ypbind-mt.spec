@@ -4,12 +4,12 @@ Summary(pl):	Demon NIS przy³±czaj±cy klientów NIS do domeny NIS
 Summary(pt_BR):	Processo de ligação NIS
 Summary(zh_CN):	NIS ·þÎñÆ÷
 Name:		ypbind-mt
-Version:	1.14
+Version:	1.16
 Release:	1
 License:	GPL
 Group:		Networking/Daemons
 Source0:	ftp://ftp.kernel.org/pub/linux/utils/net/NIS/%{name}-%{version}.tar.bz2
-# Source0-md5:	56af2ebb2ffdf0f40293856b450b6da9
+# Source0-md5:	f8216d3065cad8d763f98e1a16fb5dfb
 Source1:	ypbind.init
 Source2:	yp.conf
 Patch0:		%{name}-pthread.patch
@@ -24,8 +24,8 @@ Requires:	portmap
 Requires:	yp-tools
 Requires:	nss_nis
 Provides:	ypbind
-BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	ypbind
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sbindir	/sbin
 

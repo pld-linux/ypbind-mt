@@ -37,12 +37,12 @@ check_nisdomain()
 	if [ -n "$NISDOMAIN" ]; then
 		return 0
 	else
-		nls "Setup /etc/sysconfig/network::NISDOMAIN before use %s." ypbind
-		exit 1
+		nls "Setup /etc/sysconfig/network::NISDOMAIN before use %s." ypbind >&2
+		exit 6
 	fi
 }
 
-
+RETVAL=0
 # See how we were called.
 case "$1" in
   start)
@@ -74,7 +74,6 @@ case "$1" in
 		fi
 	else
 		msg_already_running "NIS client"
-		exit 1
 	fi
 	;;
   stop)
@@ -82,31 +81,26 @@ case "$1" in
 	if [ -f /var/lock/subsys/ypbind ]; then
 		msg_stopping "NIS client"
 		killproc ypbind
-		RETVAL=$?
 		rm -f /var/lock/subsys/ypbind
 		# if we used brute force (like kill -9) we don't want those around
 		rm -f /var/yp/binding/$(domainname)*
 	else
 		msg_not_running "NIS client"
-		exit 1
 	fi
 	;;
   status)
 	check_nisdomain
 	status ypbind
+	exit $?
 	;;
-  restart|reload)
+  restart|force-reload)
 	$0 stop
 	$0 start
 	exit $?
 	;;
-  force-reload)
-	$0 stop && $0 start
-	exit $?
-	;;
   *)
-	msg_usage "$0 {start|stop|restart|reload|force-reload|status}"
-	exit 1
+	msg_usage "$0 {start|stop|restart|force-reload|status}"
+	exit 3
 esac
 
 exit $RETVAL

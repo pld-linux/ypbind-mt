@@ -1,7 +1,7 @@
 Summary:	The NIS daemon which binds NIS clients to an NIS domain.
 Name:		ypbind-mt
 Version:	1.6
-Release:	1
+Release:	2
 Copyright:	GPL
 Group:		System Environment/Daemons
 Source0:	ftp://ftp.us.kernel.org/pub/linux/NIS/%{name}-%{version}.tar.gz

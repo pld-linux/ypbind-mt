@@ -28,9 +28,20 @@ if is_no "${NETWORKING}"; then
 	exit 1
 fi
 
+check_nisdomain()
+{
+	if [ -n "$NISDOMAIN" ]; then
+		return 0
+	else
+		echo "Setup /etc/sysconfig/network::NISDOMAIN before use ypbind."
+		exit 1
+	fi
+}
+
 # See how we were called.
 case "$1" in
   start)
+	check_nisdomain
 	# Check if the service is already running?
 	if [ ! -f /var/lock/subsys/ypbind ]; then
 		show "Binding to the NIS domain"
@@ -61,13 +72,18 @@ case "$1" in
 	touch /var/lock/subsys/ypbind
 	;;
   stop)
-	msg_stopping "NIS client"
+	check_nisdomain
+	if [ ! -f /var/lock/subsys/ypbind ]; then
+		msg_stopping "NIS client"
+		exit 1
+	fi
 	killproc ypbind
 	rm -f /var/lock/subsys/ypbind
 	# if  we used brute force (like kill -9) we don't want those around
 	rm -f /var/yp/binding/$(domainname)*
 	;;
   status)
+	check_nisdomain
 	status ypbind
 	;;
   restart|reload)
@@ -80,4 +96,3 @@ case "$1" in
 esac
 
 exit 0
-

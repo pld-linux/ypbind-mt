@@ -1,0 +1,16 @@
+--- ypbind-mt-1.12/src/Makefile.am~	Sun Jun 30 15:53:55 2002
++++ ypbind-mt-1.12/src/Makefile.am	Sun Jun 30 15:53:55 2002
+@@ -6,11 +6,9 @@
+ 
+ AUTOMAKE_OPTIONS = 1.4 gnits
+ 
+-INSTALL_PROGRAM = @INSTALL_PROGRAM@ -s -m 555
+-
+ CFLAGS = -D_REENTRANT=1 @WARNFLAGS@ @DEFS@ @CFLAGS@ \
+-	 -DUSE_BROADCAST=@USE_BROADCAST@
+-LDADD = ../lib/libcompat.a @LIBINTL@
++	 -DUSE_BROADCAST=$(USE_BROADCAST)
++LDADD = ../lib/libcompat.a $(INTLLIBS)
+ 
+ localedir = $(datadir)/locale
+ INCLUDES = -DLOCALEDIR=\"$(localedir)\"

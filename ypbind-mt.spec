@@ -79,7 +79,8 @@ rm -f missing
 %{__aclocal}
 %{__autoconf}
 %{__automake}
-%configure
+%configure \
+	--disable-slp
 %{__make}
 
 %install

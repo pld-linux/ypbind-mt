@@ -1,0 +1,25 @@
+--- ypbind-mt-1.6/src/ypbind-mt.c
++++ ypbind-mt-1.6.new/src/ypbind-mt.c
+@@ -497,19 +497,9 @@
+       exit (1);
+     }
+ 
+-  if (!use_broadcast)
+-    {
+-      if (load_config (1) != 0)
+-	{
+-	  fputs (_("No NIS server and no -broadcast option specified.\n"), stderr);
+-	  fprintf (stderr,
+-		   _("Add a NIS server to the %s configuration file,\n"),
+-		   configfile);
+-	  fputs (_("or start ypbind with the -broadcast option.\n"), stderr);
+-	  exit (1);
+-	}
+-    }
+-  else
++  if (!use_broadcast && load_config (1))
++    use_broadcast = 1;
++  if (use_broadcast)
+     add_server (domain, NULL);
+ 
+   unlink_bindingdir ();

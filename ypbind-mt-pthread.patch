@@ -1,0 +1,24 @@
+--- ypbind-mt-1.6/src/ypbind-mt.c.pthread-pidfile	Wed Aug  2 16:46:57 2000
++++ ypbind-mt-1.6/src/ypbind-mt.c	Wed Aug  2 16:46:58 2000
+@@ -318,6 +318,10 @@
+   sigset_t sigs_to_catch;
+   int caught;
+ 
++#if USE_PIDFILE
++  create_pidfile ();
++#endif /* USE_PIDFILE */
++
+   sigemptyset (&sigs_to_catch);
+   sigaddset (&sigs_to_catch, SIGCHLD);
+   sigaddset (&sigs_to_catch, SIGTERM);
+@@ -560,10 +564,6 @@
+   /* We only use /etc/hosts and DNS query to avoid deadlocks */
+   __nss_configure_lookup ("hosts", "files dns");
+ #endif /* HAVE___NSS_CONFIGURE_LOOKUP */
+-
+-#if USE_PIDFILE
+-  create_pidfile ();
+-#endif /* USE_PIDFILE */
+ 
+   sigemptyset (&sigs_to_block);
+   sigaddset (&sigs_to_block, SIGCHLD);

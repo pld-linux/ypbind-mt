@@ -12,6 +12,7 @@ Patch1:		ypbind-3.3-am.patch
 Prereq:		/sbin/chkconfig
 Requires:	portmap
 Requires:	yp-tools
+Requires:	rc-scripts
 Buildroot:	/tmp/%{name}-%{version}-root
 
 %description

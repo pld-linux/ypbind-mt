@@ -41,15 +41,15 @@ case "$1" in
 		# that need NIS fail.
 		pid=`pidofproc ypbind`
 		if [ -n "$pid" ]; then
-			show "Listening for an NIS domain server"
+			show "Listening for a NIS domain server"
 			times=0
-			until ypwhich > /dev/null 2>&1 || [ "$times" = "10" ]
+			until ypwhich >/dev/null 2>&1 || [ "$times" = "10" ]
 			do
 				echo -n "." ;
 				sleep 1
 				times=$(expr $times + 1)
 			done
-			ypwhich
+			ypwhich >/dev/null 2>&1
 			if [ $? -ne 0 ] ; then
 				fail
 			fi

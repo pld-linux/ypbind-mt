@@ -1,8 +1,8 @@
 Summary:	The NIS daemon which binds NIS clients to an NIS domain
 Summary(pl):	Demon NIS przy³±czaj±cy klientów NIS do domeny NIS
 Name:		ypbind-mt
-Version:	1.8
-Release:	3
+Version:	1.10
+Release:	1
 License:	GPL
 Group:		Networking/Daemons
 Group(de):	Netzwerkwesen/Server

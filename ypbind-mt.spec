@@ -2,7 +2,7 @@ Summary:	The NIS daemon which binds NIS clients to an NIS domain
 Summary(es):	Proceso de ligaci髇 NIS
 Summary(pl):	Demon NIS przy潮czaj眂y klient體 NIS do domeny NIS
 Summary(pt_BR):	Processo de liga玢o NIS
-Summary(zh_CN):	NIS 服务器.
+Summary(zh_CN):	NIS 服务器
 Name:		ypbind-mt
 Version:	1.12
 Release:	2

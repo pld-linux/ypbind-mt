@@ -1,18 +1,18 @@
 Summary:	The NIS daemon which binds NIS clients to an NIS domain.
-Name:		ypbind
-Version:	3.3
-Release:	21
+Name:		ypbind-mt
+Version:	1.6
+Release:	1
 Copyright:	GPL
 Group:		System Environment/Daemons
-Source0:	ftp://ftp.us.kernel.org/pub/linux/NIS/ypbind-%{version}.tar.gz
+Source0:	ftp://ftp.us.kernel.org/pub/linux/NIS/%{name}-%{version}.tar.gz
 Source1:	ypbind.init
 Source2:	yp.conf
-Patch0:		ypbind-3.3-glibc5.diff.gz
-Patch1:		ypbind-3.3-am.patch
 Prereq:		/sbin/chkconfig
 Requires:	portmap
 Requires:	yp-tools
 Requires:	rc-scripts
+Provides:	ypbind
+Obsoletes:	ypbind
 Buildroot:	/tmp/%{name}-%{version}-root
 
 %description
@@ -34,8 +34,6 @@ network.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
 
 %build
 %configure
@@ -55,7 +53,9 @@ install -d $RPM_BUILD_ROOT/{etc/rc.d/init.d,var/yp/binding}
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/ypbind
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/yp.conf
 
-gzip -9nf README $RPM_BUILD_ROOT/%{_mandir}/man8/*
+gzip -9nf README $RPM_BUILD_ROOT/%{_mandir}/man{5,8}/*
+
+%find_lang ypbind-mt
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -71,11 +71,12 @@ fi
 %triggerpostun -- ypbind <= ypbind-3.3-5
 /sbin/chkconfig --add ypbind
 
-%files
+%files -f ypbind-mt.lang
 %defattr(644,root,root,755)
 %doc README.gz
 %attr(755,root,root) /sbin/ypbind
 %attr(754,root,root) %config /etc/rc.d/init.d/*
 %config /etc/yp.conf
+%{_mandir}/man5/*
 %{_mandir}/man8/*
 %dir /var/yp/binding

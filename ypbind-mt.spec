@@ -1,15 +1,19 @@
 Summary:	The NIS daemon which binds NIS clients to an NIS domain
+Summary(es):	Proceso de ligación NIS
 Summary(pl):	Demon NIS przy³±czaj±cy klientów NIS do domeny NIS
+Summary(pt_BR):	Processo de ligação NIS
+Summary(zh_CN):	NIS ·þÎñÆ÷.
 Name:		ypbind-mt
-Version:	1.10
+Version:	1.12
 Release:	1
 License:	GPL
 Group:		Networking/Daemons
-Source0:	ftp://ftp.us.kernel.org/pub/linux/utils/net/NIS/%{name}-%{version}.tar.bz2
+Source0:	ftp://ftp.kernel.org/pub/linux/utils/net/NIS/%{name}-%{version}.tar.bz2
 Source1:	ypbind.init
 Source2:	yp.conf
 Patch0:		%{name}-pthread.patch
 Patch1:		%{name}-broadcast.patch
+Patch2:		%{name}-am_fixes.patch
 Buildrequires:	autoconf
 Buildrequires:	automake
 Buildrequires:	bison
@@ -42,6 +46,11 @@ client programs (included in the yp-tools package). If you need an NIS
 server, you'll also need to install the ypserv package to a machine on
 your network.
 
+%description -l es
+Este es un daemon que se ejecuta en clientes NIS/YP y los relaciona a
+un dominio NIS. Debe ejecutarse en sistemas basados en la glibc para
+funcionaren como clientes NIS.
+
 %description -l pl
 NIS (Network Information Service) to system dostarczaj±cy informacje
 sieciowe (nazwy u¿ytkowników, has³a, katalogi domowe, informacje o
@@ -54,10 +63,16 @@ Ten pakiet zawiera demona ypbind. Demon ten przy³±cza klientów NIS do
 domeny NIS. ypbind musi dzia³aæ na ka¿dej maszynie, na której dzia³aj±
 programy klienckie NIS.
 
+%description -l pt_BR
+Este é um daemon que roda em clientes NIS/YP e os relaciona a um
+domínio NIS. Ele deve estar rodando em sistemas baseados na glibc para
+agirem como clientes NIS.
+
 %prep
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %{__gettextize}
@@ -75,8 +90,6 @@ install -d $RPM_BUILD_ROOT/{etc/rc.d/init.d,var/yp/binding}
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/ypbind
 install %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/yp.conf
-
-gzip -9nf README
 
 %find_lang %{name}
 
@@ -103,7 +116,7 @@ fi
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc *.gz
+%doc README
 %attr(755,root,root) %{_sbindir}/ypbind
 %attr(754,root,root) /etc/rc.d/init.d/*
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/yp.conf

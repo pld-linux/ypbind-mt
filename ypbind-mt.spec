@@ -73,8 +73,8 @@ fi
 %files
 %defattr(644,root,root,755)
 %doc README.gz
-%attr(755,root,root)/sbin/ypbind
-%config /etc/rc.d/init.d/*
+%attr(755,root,root) /sbin/ypbind
+%attr(754,root,root) %config /etc/rc.d/init.d/*
 %config /etc/yp.conf
 %{_mandir}/man8/*
 %dir /var/yp/binding

@@ -2,48 +2,64 @@
 #
 # ypbind:       Starts the upbind Daemon
 #
-# Version:      @(#) /etc/rc.d/init.d/ypbind.init 1.1
+# chkconfig:	345 13 87
 #
-# chkconfig: - 13 87
-# description: This is a daemon which runs on NIS/YP clients and binds them \
-#              to a NIS domain. It must be running for systems based on glibc \
-#              to work as NIS clients, but it should not be enabled on systems \
-#              which are not using NIS.
-# processname: ypbind
-# config: /etc/yp.conf
+# description:	This is a daemon which runs on NIS/YP clients and binds them \
+#		to a NIS domain. It must be running for systems based on glibc \
+#		to work as NIS clients, but it should not be enabled on systems \
+#		which are not using NIS.
+#
+# processname:	ypbind
+# config:	/etc/yp.conf
 
-# Source function library.
+
+# Source function library
 . /etc/rc.d/init.d/functions
+
+# Get network config
+. /etc/sysconfig/network
+
+# Get service config
+[ -f /etc/sysconfig/ypbind ] && . /etc/sysconfig/ypbind
+
+# Check that networking is up.
+[ "${NETWORKING}" = "no" ] && echo "Error: Networking is down"; exit 0
+
 
 # See how we were called.
 case "$1" in
   start)
-	show "Binding to the NIS domain"
-	daemon ypbind
-	touch /var/lock/subsys/ypbind
-        # the following fixes problems with the init scripts continuing
-	# even when we are really not bound yet to a server, and then things
-	# that need NIS fail.
-	pid=`pidofproc ypbind`
-	if [ -n "$pid" ]; then
-	  show "Listening for an NIS domain server"
-	  busy
-	  times=0
-	  until ypwhich > /dev/null 2>&1 || [ "$times" = "10" ]
-	  do
-             echo -n "." ;
-	     sleep 1
-	     times=$[$times+1]
-	  done
-          ypwhich
-	  if [ $? -eq 0 ] ; then
-	    deltext
-	    ok
-	  else
-	    deltext
-	    fail
-	  fi
+	# Check if the service is already running?
+	if [ ! -f /var/lock/subsys/ypbind ]; then
+		show Binding to the NIS domain
+
+		daemon ypbind
+		# the following fixes problems with the init scripts continuing
+		# even when we are really not bound yet to a server, and then things
+		# that need NIS fail.
+		pid=`pidofproc ypbind`
+		if [ -n "$pid" ]; then
+		show "Listening for an NIS domain server"
+		busy
+		times=0
+		until ypwhich > /dev/null 2>&1 || [ "$times" = "10" ]
+		do
+			echo -n "." ;
+			sleep 1
+			times=$[$times+1]
+		done
+		ypwhich
+		if [ $? -eq 0 ] ; then
+			deltext
+			ok
+		else
+			deltext
+			fail
+		fi
+	else
+		echo "ypbind already is running"
 	fi
+	touch /var/lock/subsys/ypbind
 	;;
   stop)
 	show "Shutting down NIS services"
@@ -55,12 +71,12 @@ case "$1" in
   status)
 	status ypbind
 	;;
-  restart)
+  restart|reload)
 	$0 stop
 	$0 start
 	;;
   *)
-	echo "*** Usage: ypbind {start|stop|status|restart}"
+	echo "*** Usage: ypbind {start|stop|status|restart|reload}"
 	exit 1
 esac
 

@@ -11,6 +11,9 @@ Source1:	ypbind.init
 Source2:	yp.conf
 Patch0:		%{name}-pthread.patch
 Patch1:		%{name}-broadcast.patch
+Buildrequires:	autoconf
+Buildrequires:	automake
+Buildrequires:	bison
 Buildrequires:	gettext-devel
 Prereq:		/sbin/chkconfig
 Requires:	portmap
@@ -47,6 +50,9 @@ your network.
 
 %build
 gettextize --copy --force
+aclocal
+autoconf
+automake -a -c
 %configure
 %{__make}
 

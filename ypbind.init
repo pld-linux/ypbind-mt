@@ -1,0 +1,68 @@
+#!/bin/sh
+#
+# ypbind:       Starts the upbind Daemon
+#
+# Version:      @(#) /etc/rc.d/init.d/ypbind.init 1.1
+#
+# chkconfig: - 13 87
+# description: This is a daemon which runs on NIS/YP clients and binds them \
+#              to a NIS domain. It must be running for systems based on glibc \
+#              to work as NIS clients, but it should not be enabled on systems \
+#              which are not using NIS.
+# processname: ypbind
+# config: /etc/yp.conf
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+# See how we were called.
+case "$1" in
+  start)
+	show "Binding to the NIS domain"
+	daemon ypbind
+	touch /var/lock/subsys/ypbind
+        # the following fixes problems with the init scripts continuing
+	# even when we are really not bound yet to a server, and then things
+	# that need NIS fail.
+	pid=`pidofproc ypbind`
+	if [ -n "$pid" ]; then
+	  show "Listening for an NIS domain server:"
+	  busy
+	  times=0
+	  until ypwhich > /dev/null 2>&1 || [ "$times" = "10" ]
+	  do
+             echo -n "." ;
+	     sleep 1
+	     times=$[$times+1]
+	  done
+          ypwhich
+	  if [ $? -eq 0 ] ; then
+	    deltext
+	    ok
+	  else
+	    deltext
+	    fail
+	  fi
+	fi
+	;;
+  stop)
+	show "Shutting down NIS services: "
+	killproc ypbind
+	rm -f /var/lock/subsys/ypbind
+	# if  we used brute force (like kill -9) we don't want those around
+	rm -f /var/yp/binding/$(domainname)*
+	;;
+  status)
+	status ypbind
+	;;
+  restart)
+	$0 stop
+	$0 start
+	;;
+  *)
+	echo "*** Usage: ypbind {start|stop|status|restart}"
+	exit 1
+esac
+
+exit 0
+

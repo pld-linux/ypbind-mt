@@ -46,7 +46,7 @@ case "$1" in
 	fi
 	;;
   stop)
-	show "Shutting down NIS services: "
+	show "Shutting down NIS services"
 	killproc ypbind
 	rm -f /var/lock/subsys/ypbind
 	# if  we used brute force (like kill -9) we don't want those around

@@ -13,7 +13,7 @@ Requires:	yp-tools
 Requires:	rc-scripts
 Provides:	ypbind
 Obsoletes:	ypbind
-Buildroot:	/tmp/%{name}-%{version}-root
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 The Network Information Service (NIS) is a system which provides network

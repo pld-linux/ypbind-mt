@@ -11,14 +11,3 @@
    sigemptyset (&sigs_to_catch);
    sigaddset (&sigs_to_catch, SIGCHLD);
    sigaddset (&sigs_to_catch, SIGTERM);
-@@ -560,10 +564,6 @@
-   /* We only use /etc/hosts and DNS query to avoid deadlocks */
-   __nss_configure_lookup ("hosts", "files dns");
- #endif /* HAVE___NSS_CONFIGURE_LOOKUP */
--
--#if USE_PIDFILE
--  create_pidfile ();
--#endif /* USE_PIDFILE */
- 
-   sigemptyset (&sigs_to_block);
-   sigaddset (&sigs_to_block, SIGCHLD);

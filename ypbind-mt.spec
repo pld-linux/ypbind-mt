@@ -60,7 +60,7 @@ programy klienckie NIS.
 %patch1 -p1
 
 %build
-gettextize --copy --force
+%{__gettextize}
 aclocal
 %{__autoconf}
 %{__automake}

@@ -26,7 +26,7 @@ case "$1" in
 	# that need NIS fail.
 	pid=`pidofproc ypbind`
 	if [ -n "$pid" ]; then
-	  show "Listening for an NIS domain server:"
+	  show "Listening for an NIS domain server"
 	  busy
 	  times=0
 	  until ypwhich > /dev/null 2>&1 || [ "$times" = "10" ]

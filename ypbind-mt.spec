@@ -15,7 +15,7 @@ Buildrequires:	gettext-devel
 Prereq:		/sbin/chkconfig
 Requires:	portmap
 Requires:	yp-tools
-Requires:	rc-scripts
+Prereq:		rc-scripts
 Requires:	nss_nis
 Provides:	ypbind
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)

@@ -5,7 +5,7 @@ Summary(pt_BR):	Processo de ligação NIS
 Summary(zh_CN):	NIS ·þÎñÆ÷.
 Name:		ypbind-mt
 Version:	1.12
-Release:	1
+Release:	2
 License:	GPL
 Group:		Networking/Daemons
 Source0:	ftp://ftp.kernel.org/pub/linux/utils/net/NIS/%{name}-%{version}.tar.bz2
@@ -75,6 +75,7 @@ agirem como clientes NIS.
 %patch2 -p1
 
 %build
+rm -f missing
 %{__gettextize}
 %{__aclocal}
 %{__autoconf}
@@ -85,6 +86,7 @@ agirem como clientes NIS.
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/{etc/rc.d/init.d,var/yp/binding}
+
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 

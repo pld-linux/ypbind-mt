@@ -41,7 +41,7 @@ make
 
 %install
 rm -rf $RPM_BUILD_ROOT
-make install \
+%{__make} install \
 	prefix=$RPM_BUILD_ROOT/usr \
 	sbindir=$RPM_BUILD_ROOT/sbin \
 	mandir=$RPM_BUILD_ROOT/%{_mandir} \

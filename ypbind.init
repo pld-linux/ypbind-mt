@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# ypbind:       Starts the upbind Daemon
+# ypbind:	Starts the upbind Daemon
 #
 # chkconfig:	345 42 63
 #
@@ -23,9 +23,13 @@
 [ -f /etc/sysconfig/ypbind ] && . /etc/sysconfig/ypbind
 
 # Check that networking is up.
-if is_no "${NETWORKING}"; then
-	msg_Network_Down ypbinf
-	exit 1
+if is_yes "${NETWORKING}"; then
+	if [ ! -f /var/lock/subsys/network ]; then
+		msg_network_down "NIS client"
+		exit 1
+	fi
+else
+	exit 0
 fi
 
 check_nisdomain()
@@ -33,10 +37,11 @@ check_nisdomain()
 	if [ -n "$NISDOMAIN" ]; then
 		return 0
 	else
-		echo "Setup /etc/sysconfig/network::NISDOMAIN before use ypbind."
+		nls "Setup /etc/sysconfig/network::NISDOMAIN before use %s." ypbind
 		exit 1
 	fi
 }
+
 
 # See how we were called.
 case "$1" in
@@ -45,42 +50,46 @@ case "$1" in
 	# Check if the service is already running?
 	if [ ! -f /var/lock/subsys/ypbind ]; then
 		show "Binding to the NIS domain"
-
 		daemon ypbind
 		# the following fixes problems with the init scripts continuing
 		# even when we are really not bound yet to a server, and then things
 		# that need NIS fail.
 		pid=`pidofproc ypbind`
+		RETVAL=1
 		if [ -n "$pid" ]; then
 			show "Listening for a NIS domain server"
 			times=0
-			until ypwhich >/dev/null 2>&1 || [ "$times" = "10" ]
-			do
-				echo -n "." ;
+			until ypwhich >/dev/null 2>&1 || [ "$times" = "10" ]; do
+				echo -n "."
 				sleep 1
 				times=$(expr $times + 1)
 			done
 			ypwhich
-			if [ $? -ne 0 ] ; then
+			if [ $? -ne 0 ]; then
 				fail
+				exit 1
 			fi
+			touch /var/lock/subsys/ypbind
+			RETVAL=0
 		fi
 	else
-		msg_Already_Running ypbind
+		msg_already_running "NIS client"
 		exit 1
 	fi
-	touch /var/lock/subsys/ypbind
 	;;
   stop)
 	check_nisdomain
-	if [ ! -f /var/lock/subsys/ypbind ]; then
+	if [ -f /var/lock/subsys/ypbind ]; then
 		msg_stopping "NIS client"
+		killproc ypbind
+		RETVAL=$?
+		rm -f /var/lock/subsys/ypbind
+		# if we used brute force (like kill -9) we don't want those around
+		rm -f /var/yp/binding/$(domainname)*
+	else
+		msg_not_running "NIS client"
 		exit 1
 	fi
-	killproc ypbind
-	rm -f /var/lock/subsys/ypbind
-	# if  we used brute force (like kill -9) we don't want those around
-	rm -f /var/yp/binding/$(domainname)*
 	;;
   status)
 	check_nisdomain
@@ -89,10 +98,15 @@ case "$1" in
   restart|reload)
 	$0 stop
 	$0 start
+	exit $?
+	;;
+  force-reload)
+	$0 stop && $0 start
+	exit $?
 	;;
   *)
-	msg_Usage "$0 {start|stop|status|restart|reload}"
+	msg_usage "$0 {start|stop|restart|reload|force-reload|status}"
 	exit 1
 esac
 
-exit 0
+exit $RETVAL

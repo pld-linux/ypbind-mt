@@ -12,7 +12,7 @@ Patch1:		ypbind-3.3-am.patch
 Prereq:		/sbin/chkconfig
 Requires:	portmap
 Requires:	yp-tools
-Buildroot:	/tmp/ypbind-root
+Buildroot:	/tmp/%{name}-%{version}-root/
 
 %description
 The Network Information Service (NIS) is a system which provides network

@@ -14,14 +14,14 @@ Source2:	yp.conf
 Patch0:		%{name}-pthread.patch
 Patch1:		%{name}-broadcast.patch
 Patch2:		%{name}-am_fixes.patch
-Buildrequires:	autoconf
-Buildrequires:	automake
-Buildrequires:	bison
-Buildrequires:	gettext-devel
-Prereq:		/sbin/chkconfig
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	bison
+BuildRequires:	gettext-devel
+PreReq:		rc-scripts
+Requires(post,preun):	/sbin/chkconfig
 Requires:	portmap
 Requires:	yp-tools
-Prereq:		rc-scripts
 Requires:	nss_nis
 Provides:	ypbind
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -76,7 +76,7 @@ agirem como clientes NIS.
 
 %build
 %{__gettextize}
-aclocal
+%{__aclocal}
 %{__autoconf}
 %{__automake}
 %configure
@@ -98,7 +98,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 /sbin/chkconfig --add ypbind
-
 if [ -f /var/lock/subsys/ypbind ]; then
 	/etc/rc.d/init.d/ypbind restart >&2
 fi

@@ -1,7 +1,8 @@
 Summary:	The NIS daemon which binds NIS clients to an NIS domain
+Summary(pl):	Demon NIS przy³±czaj±cy klientów NIS do domeny NIS
 Name:		ypbind-mt
 Version:	1.8
-Release:	2
+Release:	3
 License:	GPL
 Group:		Networking/Daemons
 Group(de):	Netzwerkwesen/Server
@@ -42,6 +43,18 @@ Install the ypbind package on any machines which are running NIS
 client programs (included in the yp-tools package). If you need an NIS
 server, you'll also need to install the ypserv package to a machine on
 your network.
+
+%description -l pl
+NIS (Network Information Service) to system dostarczaj±cy informacje
+sieciowe (nazwy u¿ytkowników, has³a, katalogi domowe, informacje o
+grupach) wszystkim maszynom w sieci. NIS mo¿e pozwalaæ u¿ytkownikom
+logowaæ siê na dowolnej maszynie w sieci pod warunkiem, ¿e maszyna ma
+dzia³aj±ce programy klienckie NIS i has³o u¿ytkownika jest zapisane w
+bazie hase³ NIS. NIS by³ wcze¶niej znany jako YP (Sun Yellow Pages).
+
+Ten pakiet zawiera demona ypbind. Demon ten przy³±cza klientów NIS do
+domeny NIS. ypbind musi dzia³aæ na ka¿dej maszynie, na której dzia³aj±
+programy klienckie NIS.
 
 %prep
 %setup -q

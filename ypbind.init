@@ -23,7 +23,7 @@
 [ -f /etc/sysconfig/ypbind ] && . /etc/sysconfig/ypbind
 
 # Check that networking is up.
-[ "${NETWORKING}" = "no" ] && echo "Error: Networking is down"; exit 0
+[ "${NETWORKING}" = "no" ] && echo "Error: Networking is down" && exit 0
 
 
 # See how we were called.

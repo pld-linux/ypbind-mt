@@ -47,7 +47,7 @@ case "$1" in
 			do
 				echo -n "." ;
 				sleep 1
-				times=$[$times+1]
+				times=$(expr $times + 1)
 			done
 			ypwhich
 			if [ $? -ne 0 ] ; then

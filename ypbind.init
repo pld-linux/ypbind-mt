@@ -2,7 +2,7 @@
 #
 # ypbind:       Starts the upbind Daemon
 #
-# chkconfig:	345 41 64
+# chkconfig:	345 42 63
 #
 # description:	This is a daemon which runs on NIS/YP clients and binds them \
 #		to a NIS domain. It must be running for systems based on glibc \

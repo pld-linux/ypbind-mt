@@ -73,19 +73,10 @@ gzip -9nf README
 rm -rf $RPM_BUILD_ROOT
 
 %post
-/sbin/chkconfig --add ypbind
-
-if [ -f /var/lock/subsys/ypbind ]; then
-	/etc/rc.d/init.d/ypbind restart >&2
-fi
+NAME=ypbind; %chkconfig_add
 
 %preun
-if [ "$1" = "0" ]; then
-	if [ -f /var/lock/subsys/ypbind ]; then
-		/etc/rc.d/init.d/ypbind stop >&2
-	fi
-	/sbin/chkconfig --del ypbind
-fi
+NAME=ypbind; %chkconfig_del
 
 %triggerpostun -- ypbind <= ypbind-3.3-5
 /sbin/chkconfig --add ypbind

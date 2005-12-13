@@ -18,11 +18,11 @@ BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	gettext-devel
-PreReq:		rc-scripts
 Requires(post,preun):	/sbin/chkconfig
-Requires:	portmap
-Requires:	yp-tools
 Requires:	nss_nis
+Requires:	portmap
+Requires:	rc-scripts
+Requires:	yp-tools
 Provides:	ypbind
 Obsoletes:	ypbind
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)

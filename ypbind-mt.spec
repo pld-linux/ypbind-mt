@@ -18,6 +18,7 @@ BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	gettext-devel
+BuildRequires:	rpmbuild(macros) >= 1.268
 Requires(post,preun):	/sbin/chkconfig
 Requires:	nss_nis
 Requires:	portmap
@@ -100,15 +101,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 /sbin/chkconfig --add ypbind
-if [ -f /var/lock/subsys/ypbind ]; then
-	/etc/rc.d/init.d/ypbind restart >&2
-fi
+%service ypbind restart
 
 %preun
 if [ "$1" = "0" ]; then
-	if [ -f /var/lock/subsys/ypbind ]; then
-		/etc/rc.d/init.d/ypbind stop >&2
-	fi
+	%service ypbind stop
 	/sbin/chkconfig --del ypbind
 fi
 

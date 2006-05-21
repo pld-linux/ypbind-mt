@@ -5,7 +5,7 @@ Summary(pt_BR):	Processo de ligação NIS
 Summary(zh_CN):	NIS ·þÎñÆ÷
 Name:		ypbind-mt
 Version:	1.19.1
-Release:	1
+Release:	2
 License:	GPL
 Group:		Networking/Daemons
 Source0:	ftp://ftp.kernel.org/pub/linux/utils/net/NIS/%{name}-%{version}.tar.bz2

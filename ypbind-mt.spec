@@ -1,8 +1,8 @@
 Summary:	The NIS daemon which binds NIS clients to an NIS domain
-Summary(es.UTF-8):   Proceso de ligación NIS
-Summary(pl.UTF-8):   Demon NIS przyłączający klientów NIS do domeny NIS
-Summary(pt_BR.UTF-8):   Processo de ligação NIS
-Summary(zh_CN.UTF-8):   NIS 服务器
+Summary(es.UTF-8):	Proceso de ligación NIS
+Summary(pl.UTF-8):	Demon NIS przyłączający klientów NIS do domeny NIS
+Summary(pt_BR.UTF-8):	Processo de ligação NIS
+Summary(zh_CN.UTF-8):	NIS 服务器
 Name:		ypbind-mt
 Version:	1.19.1
 Release:	2

@@ -1,8 +1,8 @@
 Summary:	The NIS daemon which binds NIS clients to an NIS domain
-Summary(es):	Proceso de ligación NIS
-Summary(pl):	Demon NIS przy³±czaj±cy klientów NIS do domeny NIS
-Summary(pt_BR):	Processo de ligação NIS
-Summary(zh_CN):	NIS ·şÎñÆ÷
+Summary(es.UTF-8):   Proceso de ligaciÃ³n NIS
+Summary(pl.UTF-8):   Demon NIS przyÅ‚Ä…czajÄ…cy klientÃ³w NIS do domeny NIS
+Summary(pt_BR.UTF-8):   Processo de ligaÃ§Ã£o NIS
+Summary(zh_CN.UTF-8):   NIS æœåŠ¡å™¨
 Name:		ypbind-mt
 Version:	1.19.1
 Release:	2
@@ -47,26 +47,26 @@ client programs (included in the yp-tools package). If you need an NIS
 server, you'll also need to install the ypserv package to a machine on
 your network.
 
-%description -l es
+%description -l es.UTF-8
 Este es un daemon que se ejecuta en clientes NIS/YP y los relaciona a
 un dominio NIS. Debe ejecutarse en sistemas basados en la glibc para
 funcionaren como clientes NIS.
 
-%description -l pl
-NIS (Network Information Service) to system dostarczaj±cy informacje
-sieciowe (nazwy u¿ytkowników, has³a, katalogi domowe, informacje o
-grupach) wszystkim maszynom w sieci. NIS mo¿e pozwalaæ u¿ytkownikom
-logowaæ siê na dowolnej maszynie w sieci pod warunkiem, ¿e maszyna ma
-dzia³aj±ce programy klienckie NIS i has³o u¿ytkownika jest zapisane w
-bazie hase³ NIS. NIS by³ wcze¶niej znany jako YP (Sun Yellow Pages).
+%description -l pl.UTF-8
+NIS (Network Information Service) to system dostarczajÄ…cy informacje
+sieciowe (nazwy uÅ¼ytkownikÃ³w, hasÅ‚a, katalogi domowe, informacje o
+grupach) wszystkim maszynom w sieci. NIS moÅ¼e pozwalaÄ‡ uÅ¼ytkownikom
+logowaÄ‡ siÄ™ na dowolnej maszynie w sieci pod warunkiem, Å¼e maszyna ma
+dziaÅ‚ajÄ…ce programy klienckie NIS i hasÅ‚o uÅ¼ytkownika jest zapisane w
+bazie haseÅ‚ NIS. NIS byÅ‚ wczeÅ›niej znany jako YP (Sun Yellow Pages).
 
-Ten pakiet zawiera demona ypbind. Demon ten przy³±cza klientów NIS do
-domeny NIS. ypbind musi dzia³aæ na ka¿dej maszynie, na której dzia³aj±
+Ten pakiet zawiera demona ypbind. Demon ten przyÅ‚Ä…cza klientÃ³w NIS do
+domeny NIS. ypbind musi dziaÅ‚aÄ‡ na kaÅ¼dej maszynie, na ktÃ³rej dziaÅ‚ajÄ…
 programy klienckie NIS.
 
-%description -l pt_BR
-Este é um daemon que roda em clientes NIS/YP e os relaciona a um
-domínio NIS. Ele deve estar rodando em sistemas baseados na glibc para
+%description -l pt_BR.UTF-8
+Este Ã© um daemon que roda em clientes NIS/YP e os relaciona a um
+domÃ­nio NIS. Ele deve estar rodando em sistemas baseados na glibc para
 agirem como clientes NIS.
 
 %prep

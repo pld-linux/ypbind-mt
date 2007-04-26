@@ -22,7 +22,7 @@ BuildRequires:	rpmbuild(macros) >= 1.268
 Requires(post,preun):	/sbin/chkconfig
 Requires:	nss_nis
 Requires:	portmap
-Requires:	rc-scripts
+Requires:	rc-scripts >= 0.4.1.5
 Requires:	yp-tools
 Provides:	ypbind
 Obsoletes:	ypbind

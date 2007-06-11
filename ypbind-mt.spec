@@ -76,10 +76,10 @@ agirem como clientes NIS.
 %patch0 -p1
 %patch1 -p1
 
-%build
-rm -f missing
 cat m4/jh_path_xml_catalog.m4 >> acinclude.m4
 rm -rf m4
+
+%build
 %{__gettextize}
 %{__aclocal}
 %{__autoconf}

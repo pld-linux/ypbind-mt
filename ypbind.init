@@ -46,10 +46,7 @@ check_nisdomain()
 	fi
 }
 
-RETVAL=0
-# See how we were called.
-case "$1" in
-  start)
+start() {
 	check_nisdomain
 	# Check if the service is already running?
 	if [ ! -f /var/lock/subsys/ypbind ]; then
@@ -79,8 +76,9 @@ case "$1" in
 	else
 		msg_already_running "NIS client"
 	fi
-	;;
-  stop)
+}
+
+stop() {
 	check_nisdomain
 	if [ -f /var/lock/subsys/ypbind ]; then
 		msg_stopping "NIS client"
@@ -91,6 +89,16 @@ case "$1" in
 	else
 		msg_not_running "NIS client"
 	fi
+}
+
+RETVAL=0
+# See how we were called.
+case "$1" in
+  start)
+  	start
+	;;
+  stop)
+  	stop
 	;;
   status)
 	check_nisdomain
@@ -98,8 +106,8 @@ case "$1" in
 	exit $?
 	;;
   restart|force-reload)
-	$0 stop
-	$0 start
+	stop
+	start
 	exit $?
 	;;
   *)

@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# ypbind:	Starts the upbind Daemon
+# ypbind:	Starts the ypbind Daemon
 #
 # chkconfig:	345 42 63
 #

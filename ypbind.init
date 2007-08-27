@@ -109,8 +109,15 @@ case "$1" in
 	stop
 	start
 	;;
+  condrestart)
+	# NB! don't remove: dhcpcd calls this
+	if [ -f /var/lock/subsys/ypbind ]; then
+		stop
+		start
+	fi
+  	;;
   *)
-	msg_usage "$0 {start|stop|restart|force-reload|status}"
+	msg_usage "$0 {start|stop|restart|force-reload|condrestart|status}"
 	exit 3
 esac
 

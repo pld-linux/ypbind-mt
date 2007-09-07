@@ -63,7 +63,7 @@ start() {
 			until ypwhich >/dev/null 2>&1 || [ "$times" = "10" ]; do
 				echo -n "."
 				sleep 1
-				times=$(expr $times + 1)
+				times=$((times + 1))
 			done
 			ypwhich
 			if [ $? -ne 0 ]; then

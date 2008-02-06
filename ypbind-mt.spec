@@ -5,7 +5,7 @@ Summary(pt_BR.UTF-8):	Processo de ligação NIS
 Summary(zh_CN.UTF-8):	NIS 服务器
 Name:		ypbind-mt
 Version:	1.20.4
-Release:	2
+Release:	3
 License:	GPL
 Group:		Networking/Daemons
 Source0:	ftp://ftp.kernel.org/pub/linux/utils/net/NIS/%{name}-%{version}.tar.bz2
@@ -112,9 +112,6 @@ if [ "$1" = "0" ]; then
 	%service ypbind stop
 	/sbin/chkconfig --del ypbind
 fi
-
-%triggerpostun -- ypbind <= ypbind-3.3-5
-/sbin/chkconfig --add ypbind
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)

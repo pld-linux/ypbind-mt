@@ -1,20 +1,48 @@
---- ypbind-mt-1.12/src/ypbind-mt.c.orig	Sun Jun 30 15:47:25 2002
-+++ ypbind-mt-1.12/src/ypbind-mt.c	Sun Jun 30 15:49:23 2002
-@@ -563,19 +563,9 @@
+--- ypbind-mt-1.29.90/src/ypbind-mt.c.orig	2009-05-21 09:20:22.398319048 +0200
++++ ypbind-mt-1.29.90/src/ypbind-mt.c	2009-05-21 09:29:30.811996217 +0200
+@@ -297,25 +297,6 @@
+   return 0;
+ }
+ 
+-
+-/* Load the configuration, exiting if there's an error */
+-static void
+-load_config_or_exit(void)
+-{
+-  if (load_config (0) != 0)
+-    {
+-      fputs (_("No NIS server and no -broadcast option specified.\n"),
+-	     stderr);
+-      fprintf (stderr,
+-	       _("Add a NIS server to the %s configuration file,\n"),
+-	       configfile);
+-      fputs (_("or start ypbind with the -broadcast option.\n"),
+-	     stderr);
+-      exit (1);
+-    }
+-}
+-
+-
+ /* Create a pidfile on startup */
+ static void
+ create_pidfile (void)
+@@ -803,21 +784,9 @@
        exit (1);
      }
  
 -  if (!use_broadcast)
 -    {
--      if (load_config (0) != 0)
--	{
--	  fputs (_("No NIS server and no -broadcast option specified.\n"), stderr);
--	  fprintf (stderr,
--		   _("Add a NIS server to the %s configuration file,\n"),
--		   configfile);
--	  fputs (_("or start ypbind with the -broadcast option.\n"), stderr);
--	  exit (1);
--	}
+-#ifdef USE_DBUS_NM
+-      /* If we don't use DBUS, exit with an error if we cannot load the
+-	 config. Else load the config, maybe there is a network already
+-	 running. */
+-      if (disable_dbus)
+-	load_config_or_exit ();
+-      else
+-	load_config (0);
+-#else
+-      load_config_or_exit ();
+-#endif
 -    }
 -  else
 +  if (!use_broadcast && load_config (1))

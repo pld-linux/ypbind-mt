@@ -4,17 +4,18 @@ Summary(pl.UTF-8):	Demon NIS przyłączający klientów NIS do domeny NIS
 Summary(pt_BR.UTF-8):	Processo de ligação NIS
 Summary(zh_CN.UTF-8):	NIS 服务器
 Name:		ypbind-mt
-Version:	1.29.91
+Version:	1.37.1
 Release:	1
 License:	GPL
 Group:		Networking/Daemons
-Source0:	ftp://ftp.kernel.org/pub/linux/utils/net/NIS/%{name}-%{version}.tar.bz2
-# Source0-md5:	ab196dbb9474481e1e879f3d8cc94e30
+Source0:	http://www.linux-nis.org/download/ypbind-mt//%{name}-%{version}.tar.bz2
+# Source0-md5:	8af8d35e7b9a7fcc3a1576697a04bd82
 Source1:	ypbind.init
 Source2:	yp.conf
 Patch0:		%{name}-pthread.patch
 Patch1:		%{name}-broadcast.patch
 Patch2:		%{name}-dbus.patch
+URL:		http://www.linux-nis.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison

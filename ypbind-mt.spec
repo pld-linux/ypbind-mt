@@ -21,7 +21,7 @@ BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	dbus-devel
 BuildRequires:	dbus-glib-devel
-BuildRequires:	gettext-devel
+BuildRequires:	gettext-tools
 BuildRequires:	rpmbuild(macros) >= 1.268
 Requires(post,preun):	/sbin/chkconfig
 Requires:	nss_nis

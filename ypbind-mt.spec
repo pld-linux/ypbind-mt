@@ -4,29 +4,36 @@ Summary(pl.UTF-8):	Demon NIS przyłączający klientów NIS do domeny NIS
 Summary(pt_BR.UTF-8):	Processo de ligação NIS
 Summary(zh_CN.UTF-8):	NIS 服务器
 Name:		ypbind-mt
-Version:	1.37.1
-Release:	2
-License:	GPL
+Version:	2.7.2
+Release:	1
+License:	GPL v2
 Group:		Networking/Daemons
-Source0:	http://www.linux-nis.org/download/ypbind-mt//%{name}-%{version}.tar.bz2
-# Source0-md5:	8af8d35e7b9a7fcc3a1576697a04bd82
+#Source0Download: https://github.com/thkukuk/ypbind-mt/releases
+Source0:	https://github.com/thkukuk/ypbind-mt/releases/download/v%{version}/%{name}-%{version}.tar.xz
+# Source0-md5:	130ddec4c31192cbefefc66d9d8ffbd8
 Source1:	ypbind.init
 Source2:	yp.conf
-Patch0:		%{name}-pthread.patch
-Patch1:		%{name}-broadcast.patch
-Patch2:		%{name}-dbus.patch
+Patch0:		%{name}-broadcast.patch
 URL:		http://www.linux-nis.org/
-BuildRequires:	autoconf
-BuildRequires:	automake
+BuildRequires:	autoconf >= 2.50
+BuildRequires:	automake >= 1.6
 BuildRequires:	bison
-BuildRequires:	dbus-devel
-BuildRequires:	dbus-glib-devel
-BuildRequires:	gettext-tools
+BuildRequires:	docbook-dtd43-xml
+BuildRequires:	gettext-tools >= 0.19
+BuildRequires:	libnsl-devel >= 1.0.4
+BuildRequires:	libtirpc-devel >= 1.0.1
+BuildRequires:	libxslt-progs
+BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.268
+BuildRequires:	systemd-devel >= 1:209
+BuildRequires:	tar >= 1:1.22
+BuildRequires:	xz
 Requires(post,preun):	/sbin/chkconfig
+Requires:	libnsl >= 1.0.4
+Requires:	libtirpc >= 1.0.1
 Requires:	nss_nis
-Requires:	portmap
 Requires:	rc-scripts >= 0.4.1.5
+Requires:	rpcbind
 Requires:	yp-tools
 Provides:	ypbind
 Obsoletes:	ypbind
@@ -76,19 +83,15 @@ agirem como clientes NIS.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
-
-cat m4/jh_path_xml_catalog.m4 >> acinclude.m4
-rm -rf m4
 
 %build
 %{__gettextize}
-%{__aclocal}
+%{__aclocal} -I m4
 %{__autoconf}
+%{__autoheader}
 %{__automake}
-%configure \
-	--disable-slp
+%configure
+
 %{__make}
 
 %install
@@ -120,7 +123,8 @@ fi
 %defattr(644,root,root,755)
 %doc README
 %attr(755,root,root) %{_sbindir}/ypbind
-%attr(754,root,root) /etc/rc.d/init.d/*
+%attr(754,root,root) /etc/rc.d/init.d/ypbind
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/yp.conf
-%{_mandir}/man[58]/*
+%{_mandir}/man5/yp.conf.5*
+%{_mandir}/man8/ypbind.8*
 %dir /var/yp/binding

@@ -5,7 +5,7 @@ Summary(pt_BR.UTF-8):	Processo de ligação NIS
 Summary(zh_CN.UTF-8):	NIS 服务器
 Name:		ypbind-mt
 Version:	2.7.2
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Networking/Daemons
 #Source0Download: https://github.com/thkukuk/ypbind-mt/releases
